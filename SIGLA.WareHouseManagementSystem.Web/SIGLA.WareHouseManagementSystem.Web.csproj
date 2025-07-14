@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+
+    <!-- 🔽 Agrega esta línea aquí -->
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+
+    
+     <None Update="AspnetCoreMvcFullContext.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SIGLA.Business.Dto\SIGLA.Business.Dto.csproj" />
+    <ProjectReference Include="..\SIGLA.Business.Services\SIGLA.Business.Services.csproj" />
+    <ProjectReference Include="..\SIGLA.DataAccess.Repository\SIGLA.DataAccess.Repository.csproj" />
+    <ProjectReference Include="..\SIGLA.Interface.Repository\SIGLA.Interface.Repository.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\fondo\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,102 @@
+@model IEnumerable<SIGLA.Business.Dto.UsuariosFilessss.UsuariosFileColeccionDto>
+
+@{
+    ViewData["Title"] = "Galería de Fotos";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/toastr/toastr.js"></script>
+    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <a href="@Url.Action("ListadoUsuariosSucursales", "Usuarios")" class="btn btn-primary waves-effect waves-light">
+            <i class="ri-arrow-left-line"></i> Atrás
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    @if (Model != null && Model.Any())
+    {
+        <div class="col-12">
+            <h4 class="fw-bold">Total de Fotos: @Model.Count()</h4>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Fecha y Hora de Registro:</small><br />
+                            <strong>@item.FechaHoraCreacion</strong>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-danger" data-id="@item.UsuariosFileNo" onclick="eliminarRegistro(this)">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="text-muted mb-1"><strong>Nombre Archivo:</strong> @item.NombreArchivo</p>
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Data)"
+                             alt="Imagen"
+                             class="img-fluid rounded imagen-rotable"
+                             style="height: 400px; object-fit: contain; transition: transform 0.3s ease-in-out;" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="alert alert-warning text-center" role="alert">
+                No hay fotos disponibles.
+            </div>
+        </div>
+    }
+</div>
+
+@section PageScripts {
+    <script>
+        function eliminarRegistro(button) {
+            var id = $(button).data("id");
+
+            Swal.fire({
+                title: '¿Estás seguro de eliminar?',
+                text: "No podrás revertir esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarFotoReporteExportacionesId", "ReporteExportaciones")',
+                        type: 'POST',
+                        data: { reporteExportacionFileNo: id },
+                        success: function (response) {
+                            if (response.success) {
+                                toastr.success("Eliminado correctamente", "");
+                                setTimeout(() => location.reload(), 1500);
+                            } else {
+                                Swal.fire('Error', 'No se pudo eliminar el registro', 'error');
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Error', 'Error en el servidor', 'error');
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

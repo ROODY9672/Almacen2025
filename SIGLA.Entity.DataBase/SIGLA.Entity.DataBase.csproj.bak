@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Company>SIGLA</Company>
+    <Product>SIGLA.Entity.DataBase</Product>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.Entity.DataBase\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.Entity.DataBase\.editorconfig" />
+  </ItemGroup>
+
+</Project>

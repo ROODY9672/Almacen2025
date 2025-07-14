@@ -1,0 +1,308 @@
+@model SIGLA.Business.Dto.Almacenessss.AlmacenesYImageViewModel
+
+
+
+@{
+    ViewData["Title"] = "Registrar Usuario";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="~/vendor/libs/tagify/tagify.css" />
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/form-validation.css" />
+    <link rel="stylesheet" href="~/vendor/libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css">
+
+    <link rel="stylesheet" href="~/vendor/libs/quill/typography.css">
+    <link rel="stylesheet" href="~/vendor/libs/quill/katex.css">
+    <link rel="stylesheet" href="~/vendor/libs/quill/editor.css">
+    <link rel="stylesheet" href="~/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="~/vendor/libs/dropzone/dropzone.css">
+
+
+
+
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/vendor/libs/moment/moment.js"></script>
+    <script src="~/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="~/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="~/vendor/libs/tagify/tagify.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/popular.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/bootstrap5.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/auto-focus.js"></script>
+    <script src="~/vendor/libs/toastr/toastr.js"></script>
+
+    <script src="~/vendor/libs/quill/katex.js"></script>
+    <script src="~/vendor/libs/quill/quill.js"></script>
+    <script src="~/vendor/libs/select2/select2.js"></script>
+    <script src="~/vendor/libs/dropzone/dropzone.js"></script>
+    <script src="~/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+
+}
+
+
+
+
+
+<div class="row gy-12">
+
+    <div class="col-xl-12">
+        <h6 class="text-muted">Almacenes  </h6>
+        <div class="card text-center mb-4">
+            <div class="card-header p-0">
+                <div class="nav-align-top">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex flex-column gap-1 active border-bottom border-primary text-primary"
+                               href="@Url.Action("RegistrarAlmacenes", "Almacenes")"
+                               role="tab">
+                                <i class="tf-icons ri-file-add-line"></i>
+                                <span>Registro</span>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link d-flex flex-column gap-1 text-dark"
+                               href="@Url.Action("ListadoAlmacenes", "Almacenes")"
+                               role="tab">
+                                <i class="tf-icons ri-list-check"></i>
+                                <span>Listado</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content pb-0">
+                    <div class="tab-pane fade show active" id="navs-home-card" role="tabpanel">
+
+                        <h5 class="card-header ">
+                            <i class="ri-shield-user-line text-primary fs-4"></i>
+                            Registrar Almacén
+                        </h5>
+
+
+
+
+                        <div class="card-body">
+                            @using (Html.BeginForm("Registrar", "Almacenes", FormMethod.Post, new { id = "formAlmacen" }))
+                            {
+                                <div class="row g-4">
+
+                                    
+                                    <div class="col-12">
+                                        <h6 class="text-start">1. Datos  </h6>
+                                        <hr class="mt-0" />
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label text-sm-end" for="NombreAlmacen">Nombre Almacén</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group input-group-merge">
+                                                    @* <span class="input-group-text"><i class="ri-bank-line"></i></span> *@
+                                                    @Html.TextBoxFor(m => m.centroControl.NombreAlmacen, new
+                                                        {
+                                                            @class = "form-control",
+                                                            @id = "NombreAlmacen",
+                                                            placeholder = "Nombre Almacén"
+                                                        })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                     
+
+
+
+
+                                    <!-- Imagen -->
+                                    <!-- Media -->
+                                    <div class="card mb-6">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0 card-title">Foto del Almacén</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Usamos DIV en lugar de FORM porque ya estamos dentro de otro formulario -->
+                                            <div action="/upload" class="dropzone needsclick" id="FotoAlmacen">
+                                                <div class="dz-message needsclick">
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="avatar avatar-md">
+                                                            <span class="avatar-initial rounded bg-label-secondary">
+                                                                <i class="ri-upload-2-line ri-24px"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <p class="h4 needsclick my-2">Arrastra tu imagen aquí</p>
+                                                    <small class="text-muted d-block fs-6 my-2">o</small>
+                                                    <span class="needsclick btn btn-sm btn-outline-primary" id="btnBrowse">Seleccionar imagen</span>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="fileInput" id="fileInput" type="file" accept="image/*" />
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Media -->
+
+                                     
+
+                                    <hr />
+                                     
+
+                                    <div class="col-12 text-center">
+                                        <button type="button" class="btn btn-primary" id="btnRegistrar">
+                                            <i class="ri-check-double-line"></i>Registrar
+                                        </button>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Tabs -->
+@section PageScripts {
+    @*  <script src="~/js/form-validation.js"></script> *@
+    <script src="~/js/ui-toasts.js"></script>
+    <script src="~/js/app-ecommerce-product-add.js"></script>
+
+
+
+
+
+
+    <script>
+             $(function () {
+
+                   // Prevenir envío del formulario con Enter
+            $('#formAlmacen').on('submit', function (e) {
+                e.preventDefault();
+            });
+
+            $('#btnRegistrar').on('click', function (e) {
+                e.preventDefault();
+
+                var $btn = $(this);
+                $btn.prop('disabled', true);
+
+                if (!validarCamposSucursal()) {
+                    $btn.prop('disabled', false);
+                    return;
+                }
+
+                var formData = new FormData();
+                formData.append('centroControl.NombreAlmacen', $('#NombreAlmacen').val().trim());
+
+                if (dropzoneFotoAlmacen.files.length > 0) {
+                    formData.append('fileInput', dropzoneFotoAlmacen.files[0]);
+                    console.log("✅ Imagen agregada:", dropzoneFotoAlmacen.files[0].name);
+                }
+
+                $.ajax({
+                    url: '@Url.Action("RegistrarAlmacenes", "Almacenes")',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.redirect) {
+                            // ✅ Si el servidor pidió redirección (por sesión expirada)
+                            window.location.href = data.redirect;
+                            return;
+                        }
+
+                        if (data.success) {
+                            toastr.success("Almacén registrado correctamente");
+                            $('#formAlmacen')[0].reset();
+                            setTimeout(() => location.reload(), 2000);
+                        } else {
+                            toastr.error(data.error || "Error al registrar");
+                            $btn.prop('disabled', false);
+                        }
+                    },
+                    error: function () {
+                        toastr.error("Error en el servidor");
+                        $btn.prop('disabled', false);
+                    }
+                });
+            });
+        });
+
+        function validarCamposSucursal() {
+            let errores = false;
+
+            if ($('#NombreAlmacen').val().trim() === "") {
+                toastr.warning("El nombre Almacén es obligatorio","Advertencia");
+                errores = true;
+            }
+          
+        
+
+            return !errores;
+        }
+    </script>
+
+
+
+
+
+
+    <script>
+             Dropzone.autoDiscover = false;
+
+        const previewTemplate = `
+        <div class="dz-preview dz-file-preview">
+          <div class="dz-details">
+            <div class="dz-thumbnail">
+              <img data-dz-thumbnail />
+              <span class="dz-nopreview">No preview</span>
+              <div class="dz-success-mark"></div>
+              <div class="dz-error-mark"></div>
+              <div class="dz-error-message"><span data-dz-errormessage></span></div>
+
+            </div>
+            <div class="dz-filename" data-dz-name></div>
+            <div class="dz-size" data-dz-size></div>
+          </div>
+        </div>
+        `;
+
+        const dropzoneFotoAlmacen = new Dropzone("#FotoAlmacen", {
+          previewTemplate: previewTemplate,
+          maxFiles: 1,
+          maxFilesize: 5,
+          acceptedFiles: ".jpg,.jpeg,.png,.gif",
+          addRemoveLinks: true,
+          autoProcessQueue: false
+        });
+
+
+
+
+
+    </script>
+
+
+
+
+}

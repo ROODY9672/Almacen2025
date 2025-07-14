@@ -1,0 +1,185 @@
+@model SIGLA.Business.Dto.Usuariossss.UsuarioLoginDto
+
+@{
+    Layout = "_BlankLayout";
+    ViewData["Title"] = "Login Basic - Pages";
+}
+
+@{
+    var tieneErrorClave = ViewData.ModelState["Clave"]?.Errors.Count > 0;
+    var claseInputGroup = tieneErrorClave
+        ? "input-group input-group-merge input-validation-error"
+        : "input-group input-group-merge";
+}
+
+
+@section VendorStyles {
+    @* <link rel="stylesheet" href="~/vendor/libs/form-validation/form-validation.css" /> *@
+}
+
+@section VendorScripts {
+   @*  <script src="~/vendor/libs/form-validation/popular.js"></script>
+    <script src="~/vendor/libs/form-validation/bootstrap5.js"></script>
+    <script src="~/vendor/libs/form-validation/auto-focus.js"></script> *@
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+
+    <style>
+        /* ✅ Aplicar el borde de error a todo el grupo (campo + ícono) */
+        .input-group.input-validation-error {
+            border: 1px solid #ff3e1d !important;
+            border-radius: 0.5rem;
+            padding: 0.05rem;
+        }
+
+            /* 🧹 Limpieza visual: elimina bordes individuales internos */
+            .input-group.input-validation-error .form-control,
+            .input-group.input-validation-error .input-group-text {
+                border: none !important;
+                box-shadow: none !important;
+            }
+    </style>
+}
+
+@section PageScripts {
+    <script src="~/js/pages-auth.js"></script>
+}
+
+<div class="position-relative">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner py-6 mx-4">
+
+            <!-- Login -->
+            <div class="card p-7">
+                <!-- Logo -->
+
+                <div class="app-brand justify-content-center mt-5">
+                    <div class="app-brand-link gap-3 d-flex align-items-center">
+                        <span class="app-brand-logo demo">
+                            @await Html.PartialAsync("../_Partials/_MacrosTest")
+                        </span>
+                        <span class="app-brand-text demo text-heading fw-semibold">
+                            @TempData.Peek("appName")
+                        </span>
+                    </div>
+                </div>
+
+
+
+              
+
+
+                <!-- /Logo -->
+
+                <div class="card-body mt-1">
+                    <h4 class="mb-1">Bienvenido a @TempData.Peek("appName")! 👋🏻</h4>
+                    <p class="mb-5">Por favor, inicia sesión para continuar.</p>
+
+                    @* Muestra errores generales *@
+                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                    @using (Html.BeginForm("LoginBasic", "Auth", FormMethod.Post))
+                    {
+                        <div class="form-floating form-floating-outline mb-5">
+                            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", placeholder = "Correo", autocomplete = "off" })
+                            <label for="Correo">Correo electrónico</label>
+                            @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                        </div>
+
+                      @*   <div class="mb-5">
+                            <div class="form-password-toggle">
+                                <div class="input-group input-group-merge">
+                                    <div class="form-floating form-floating-outline">
+                                        @Html.PasswordFor(m => m.Clave, new { @class = "form-control", placeholder = "Contraseña" })
+                                        <label for="Clave">Contraseña</label>
+                                    </div>
+                                    <span class="input-group-text cursor-pointer"><i class="ri-eye-off-line ri-20px"></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.Clave, "", new { @class = "text-danger" })
+                            </div>
+                        </div> *@
+
+
+
+                        <div class="form-password-toggle">
+                            <div class="@claseInputGroup">
+                                <div class="form-floating form-floating-outline">
+                                    @Html.PasswordFor(m => m.Clave, new { @class = "form-control", placeholder = "Contraseña" })
+                                    <label for="Clave">Contraseña</label>
+                                </div>
+                                <span class="input-group-text cursor-pointer"><i class="ri-eye-off-line ri-20px"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Clave, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+
+
+                        <div class="mb-5 pb-2 d-flex justify-content-between pt-2 align-items-center">
+                            <div class="form-check mb-0">
+
+                                <input class="form-check-input" type="checkbox" id="remember-me" name="Recordarme" value="true"
+                                @(Model.Recordarme ? "checked" : "") />
+
+
+                                <label class="form-check-label" for="remember-me">
+                                    Recordarme
+                                </label>
+                            </div>
+                            <a href="/Auth/ForgotPasswordBasic" class="float-end mb-1">
+                                <span>¿Olvidaste tu contraseña?</span>
+                            </a>
+                        </div>
+
+                        <div class="mb-5">
+                            <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesión</button>
+                        </div>
+
+                        @* Error de login desde ViewBag *@
+                        if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger text-center">
+                                @ViewBag.Error
+                            </div>
+                        }
+                    }
+
+                    <p class="text-center mb-5">
+                        <span>¿Nuevo en nuestra plataforma?</span>
+                        <a href="/Auth/RegisterBasic">
+                            <span>Crea una cuenta</span>
+                        </a>
+                    </p>
+
+                    <div class="divider my-5">
+                        <div class="divider-text">o</div>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-facebook">
+                            <i class="tf-icons ri-facebook-fill ri-24px"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-twitter">
+                            <i class="tf-icons ri-twitter-fill ri-24px"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-github">
+                            <i class="tf-icons ri-github-fill ri-24px"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-google-plus">
+                            <i class="tf-icons ri-google-fill ri-24px"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Login -->
+
+            <img src="~/img/illustrations/tree-3.png" alt="auth-tree" class="authentication-image-object-left d-none d-lg-block">
+            <img src="~/img/illustrations/auth-basic-mask-light.png" class="authentication-image d-none d-lg-block scaleX-n1-rtl" height="172" alt="triangle-bg">
+            <img src="~/img/illustrations/tree.png" alt="auth-tree" class="authentication-image-object-right d-none d-lg-block">
+
+        </div>
+    </div>
+</div>

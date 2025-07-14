@@ -1,0 +1,17 @@
+@{
+    ViewBag.Title = "Panel de Ventas";
+}
+
+<h2>Bienvenido al módulo de ventas</h2>
+
+@if (ViewBag.NombreUsuario != null)
+{
+    <p><strong>Usuario conectado:</strong> @ViewBag.NombreUsuario</p>
+}
+
+
+
+<p>UsuarioNo Id : <strong>@ViewBag.UsuarioNo</strong></p>
+<p>Sucursal actual: <strong>@ViewBag.SucursalNo</strong></p>
+<p>Relación Usuario-Sucursal: <strong>@ViewBag.UsuarioSucursalNo</strong></p>
+<p>usuarioActual: <strong>@ViewBag.usuarioActual</strong></p>

@@ -1,0 +1,10 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@if (HttpContextAccessor.HttpContext.Session.GetString("UsuarioNo") != null)
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("CerrarSesion", "Login")">
+            <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </li>
+}

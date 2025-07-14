@@ -1,0 +1,335 @@
+﻿@model SIGLA.Business.Dto.Usuariossss.UsuariosCreacionDto
+@{
+    ViewBag.Title = "Registrar Usuario";
+}
+
+<style>
+    .card-sucursal {
+        border: 2px solid #ddd;
+        border-radius: 12px;
+        padding: 20px 10px;
+        width: 180px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: white;
+        position: relative;
+    }
+
+        .card-sucursal:hover {
+            border-color: #5B6DFF;
+            box-shadow: 0 4px 12px rgba(91, 109, 255, 0.2);
+        }
+
+        .card-sucursal input[type="checkbox"] {
+            display: none;
+        }
+
+        .card-sucursal .contenido {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-sucursal .icono {
+            font-size: 32px;
+            color: #5B6DFF;
+            margin-bottom: 10px;
+        }
+
+        .card-sucursal .titulo {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .card-sucursal .descripcion {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Indicador visual del checkbox (círculo inferior) */
+        .card-sucursal::after {
+            content: "";
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        /* Cambios al estar seleccionado */
+        .card-sucursal input[type="checkbox"]:checked + .contenido {
+            background-color: #f0f3ff;
+        }
+
+        .card-sucursal input[type="checkbox"]:checked ~ .contenido .titulo {
+            color: #5B6DFF;
+        }
+
+        .card-sucursal input[type="checkbox"]:checked ~ .contenido .icono {
+            color: #5B6DFF;
+        }
+
+        .card-sucursal input[type="checkbox"]:checked ~ .contenido .descripcion {
+            color: #5B6DFF;
+        }
+
+        .card-sucursal input[type="checkbox"]:checked ~ .checked-indicator::after {
+            border-color: #5B6DFF;
+            background-color: #5B6DFF;
+        }
+
+    /* Capa adicional para permitir el selector visual en lugar del after directamente en .card */
+    .checked-indicator {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        background-color: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .card-sucursal input[type="checkbox"]:checked ~ .checked-indicator {
+        border-color: #5B6DFF;
+        background-color: #5B6DFF;
+    }
+</style>
+
+ 
+
+<div class="card-tabs-container">
+    <ul class="tabs">
+        <li class="tab active" data-tab="tab1">Personal Info</li>
+        <li class="tab" data-tab="tab2">Account Details</li>
+        <li class="tab" data-tab="tab3">Social Links</li>
+    </ul>
+
+
+    <div class="portlet light bordered tab-body-content">
+
+
+        <div class="portlet-body">
+
+
+
+            <div class="row justify-content-center text-center">
+
+                <div class="col-md-12">
+                    <div class="table-title">
+                        <div class="caption" style="color: #b0b0b0; font-weight: bold; font-size: 22px;">
+                            <i class="fas fa-shield-alt" style="color: #b0b0b0; font-size: 22px; margin-right: 1px;"></i>
+                            <span class="caption-subject uppercase">Registrar Usuario</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            @using (Html.BeginForm("Registrar", "Usuariossss", FormMethod.Post, new { @class = "form-horizontal", id = "form-usuario" }))
+            {
+                <div class="form-group">
+                    <label for="NombreUsuario" class="col-md-2 control-label">Nombre Usuario <span style="color:red">*</span></label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control", @maxlength = 100, @id = "NombreUsuario" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Correo" class="col-md-2 control-label">Correo <span style="color:red">*</span></label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @maxlength = 100, @id = "Correo" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Clave" class="col-md-2 control-label">Contraseña <span style="color:red">*</span></label>
+                    <div class="col-md-4">
+                        @Html.PasswordFor(m => m.Clave, new { @class = "form-control", @maxlength = 100, @id = "Clave" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ConfirmarClave" class="col-md-2 control-label">Confirmar Contraseña <span style="color:red">*</span></label>
+                    <div class="col-md-4">
+                        <input type="password" class="form-control" id="ConfirmarClave" maxlength="100" />
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label for="ConfirmarClave" class="col-md-2 control-label">Rol Usuario <span style="color:red">*</span></label>
+
+                    <div class="col-md-4">
+                        <select id="Rol" name="Rol" class="form-control">
+                            <option value="">-- SELECCIONE --</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Almacenero">Almacenero</option>
+                            <option value="Vendedor">Vendedor</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                    <div class="row justify-content-center text-center">
+
+                        <div class="col-md-12">
+                            <div class="table-title">
+                                <div class="caption" style="color: #b0b0b0; font-weight: bold; font-size: 22px;">
+                                    <i class="fas fa-shield-alt" style="color: #b0b0b0; font-size: 22px; margin-right: 1px;"></i>
+                                    <span class="caption-subject uppercase">sucursales</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-2">
+                        </div>
+
+                        <div class="col-md-10">
+                            <div class="col-md-12 d-flex flex-wrap gap-3" id="contenedorTarjetasSucursal">
+                                @foreach (SelectListItem item in ViewBag.viewSucursales)
+                                {
+                                    <label class="card-sucursal">
+                                        <input type="checkbox" name="SucursalesSeleccionadas" value="@item.Value" class="input-sucursal" />
+                                        <div class="contenido">
+                                            <div class="icono"><i class="fas fa-store"></i></div>
+
+
+                                            <div class="titulo">@item.Text</div>
+                                        </div>
+                                        <span class="checked-indicator"></span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <hr />
+
+
+                    <div class="form-group text-center">
+                        <button type="button" class="btn-morado">
+                            <i class="fa fa-check"></i> Registrar
+                        </button>
+
+                    </div>
+                    }
+                </div>
+            </div>
+</div>
+
+
+
+@section scripts {
+
+
+
+    <script>
+
+
+ 
+
+
+
+        $(document).ready(function () {
+            $('.btn-morado').click(function () {
+                var hasError = false;
+
+                // Limpiar errores previos
+                $('#NombreUsuario, #Correo, #Clave, #ConfirmarClave,#Rol').removeClass('input-error');
+
+                var nombre = $('#NombreUsuario').val().trim();
+                var correo = $('#Correo').val().trim();
+                var clave = $('#Clave').val().trim();
+                var confirmarClave = $('#ConfirmarClave').val().trim();
+                var sucursal = $('#SucursalNo').val(); 
+                var Rol = $('#Rol').val();
+
+                if (nombre === "") {
+                    toastr.info("El nombre de usuario es obligatorio.", "Advertencia");
+                    $('#NombreUsuario').addClass('input-error');
+                    hasError = true;
+                }
+
+                if (correo === "") {
+                    toastr.info("El correo es obligatorio.", "Advertencia");
+                    $('#Correo').addClass('input-error');
+                    hasError = true;
+                }
+
+                if (clave === "") {
+                    toastr.info("La contraseña es obligatoria.", "Advertencia");
+                    $('#Clave').addClass('input-error');
+                    hasError = true;
+                }
+
+                if (confirmarClave === "") {
+                    toastr.info("Debe confirmar la contraseña.", "Advertencia");
+                    $('#ConfirmarClave').addClass('input-error');
+                    hasError = true;
+                }
+
+                if (clave !== "" && confirmarClave !== "" && clave !== confirmarClave) {
+                    toastr.error("Las contraseñas no coinciden.", "Error");
+                    $('#Clave, #ConfirmarClave').addClass('input-error');
+                    hasError = true;
+                }
+
+                // Validar selección de al menos una sucursal
+                var seleccionadas = $('input[name="SucursalesSeleccionadas"]:checked');
+                if (seleccionadas.length === 0) {
+                    toastr.info("Debe seleccionar al menos una sucursal.", "Validación");
+                    hasError = true;
+                }
+
+                if (Rol === "") {
+                    toastr.info("Debe seleccionar Rol Usuario es obligatorio.", "Advertencia");
+                    $('#Rol').addClass('input-error');
+                    hasError = true;
+                }
+                if (hasError) {
+                    return;
+                }
+
+                // Enviar por AJAX
+                $.ajax({
+                    url: '@Url.Action("Registrar", "Usuarios")',
+                    type: 'POST',
+                    data: $('#form-usuario').serialize(),
+                    success: function (data) {
+                    if (data.success) {
+                    toastr.success("Usuario registrado correctamente.", "Éxito");
+                    $('#form-usuario')[0].reset();
+                    } else {
+                    toastr.error(data.error || "Ocurrió un error.", "Error");
+                    }
+                    },
+                    error: function () {
+                    toastr.error("Error en el servidor.", "Error");
+                    }
+                    });
+                    });
+                    });
+    </script>
+}

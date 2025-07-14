@@ -1,0 +1,17 @@
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.DataAccess.Repository.deps.json
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.DataAccess.Repository.dll
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.DataAccess.Repository.pdb
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.Entity.DataBase.dll
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.Interface.Repository.dll
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.Interface.Repository.pdb
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\bin\Debug\net8.0\SIGLA.Entity.DataBase.pdb
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.csproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.Da.17A2BC9D.Up2Date
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.dll
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\refint\SIGLA.DataAccess.Repository.dll
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\SIGLA.DataAccess.Repository.pdb
+C:\Users\Usuario\Desktop\themeFor\materio-bootstrap-html-aspnet-core-mvc-admin-template-v2.0.1\SIGLA.DataAccess.Repository\obj\Debug\net8.0\ref\SIGLA.DataAccess.Repository.dll

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "SIGLA.Entity.DataBase/1.0.0": {
+        "runtime": {
+          "SIGLA.Entity.DataBase.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SIGLA.Entity.DataBase/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

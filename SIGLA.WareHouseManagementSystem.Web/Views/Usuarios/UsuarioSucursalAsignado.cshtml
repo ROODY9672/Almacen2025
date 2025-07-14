@@ -1,0 +1,282 @@
+@model SIGLA.Business.Dto.UsuarioSucursalsss.UsuariosPanelControlViewModel
+
+@{
+    ViewData["Title"] = "Mis Sucursales";
+    Layout = "_BlankLayout"; // Usa tu layout sin menú
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="~/vendor/libs/plyr/plyr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/select2/select2.js"></script>
+    <script src="~/vendor/libs/plyr/plyr.js"></script>
+    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/app-academy.css" />
+    <style>
+
+        /* Asegura que el dropdown esté por encima de todo */
+        /* Asegura que ningún contenedor clave esté ocultando el dropdown */
+        .card-body,
+        .app-academy,
+        .container,
+        .row,
+        .d-flex,
+        .content-wrapper {
+            overflow: visible !important;
+        }
+
+        /* Menú dropdown visible sobre todo */
+        .dropdown-menu {
+            z-index: 9999 !important;
+            position: absolute !important;
+            background-color: #fff;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+        }
+
+            .dropdown-menu.show {
+                display: block !important;
+            }
+
+        .dropdown {
+            position: relative !important;
+        }
+
+        
+
+
+
+        /* Fondo rotativo pantalla completa */
+        #fondo-rotativo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 1;
+            transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        .fade {
+            opacity: 0;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(5px);
+        }
+
+
+
+    </style>
+}
+
+@section PageScripts {
+    <script>
+        const fondo = document.getElementById("fondo-rotativo");
+
+        const imagenes = [
+            "/fondo/Avion.png",
+            "/fondo/BallenaContenedores.png",
+            "/fondo/BarcoContenedores.png",
+            "/fondo/Camion.png",
+            "/fondo/BallenaContenedor2.png",
+            "/fondo/AvionContenedor.png",
+            "/fondo/CamionContenedor.png",
+            "/fondo/FlotaBarco.png", 
+        ];
+
+        let index = 0;
+
+        function cambiarFondo() {
+            fondo.classList.add("fade");
+
+            setTimeout(() => {
+                fondo.style.backgroundImage = `url('${imagenes[index]}')`;
+                fondo.classList.remove("fade");
+                index = (index + 1) % imagenes.length;
+            }, 1000);
+        }
+
+        fondo.style.backgroundImage = `url('${imagenes[0]}')`;
+        index++;
+
+        setInterval(cambiarFondo, 4000);
+
+        
+    </script>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contenedor = document.getElementById("contenedorPerfil");
+            const menu = document.getElementById("menuCerrarSesion");
+
+            function mostrarMenu() {
+                const rect = contenedor.getBoundingClientRect();
+                menu.style.left = rect.left + "px";
+                menu.style.top = (rect.bottom + 5 + window.scrollY) + "px";
+                menu.style.display = "block";
+            }
+
+            function ocultarMenu() {
+                menu.style.display = "none";
+            }
+
+            contenedor.addEventListener("mouseenter", mostrarMenu);
+            menu.addEventListener("mouseenter", mostrarMenu);
+
+            contenedor.addEventListener("mouseleave", () => {
+                setTimeout(() => {
+                    if (!menu.matches(':hover')) ocultarMenu();
+                }, 200);
+            });
+
+            menu.addEventListener("mouseleave", ocultarMenu);
+        });
+    </script>
+
+
+@*     <script>
+        $(document).ready(function () {
+            var mensajeSesionExpirada = '@TempData["SesionExpirada"]';
+
+            if (mensajeSesionExpirada) {
+                Swal.fire({
+                    title: '¡Atención!',
+                    html: `
+                        <div style="text-align:center;">
+                            <strong>${mensajeSesionExpirada}</strong>
+                        </div>
+                    `,
+                    icon: 'warning',
+                    confirmButtonText: 'Seleccionar sucursal',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                });
+            }
+        });
+    </script> *@
+  
+
+
+}
+
+<!-- Fondo rotativo -->
+<div id="fondo-rotativo"></div>
+
+<!-- Fondo rotativo -->
+
+<!-- Contenido principal -->
+<div class="app-academy pt-0">
+    <!-- ✅ Tarjeta superior: nombre, correo y avatar -->
+    <div class="card w-100 border-0 shadow-none mb-4"
+         style="background: linear-gradient(to right, #d1b3ff, #a259ff); padding: 0.75rem 1.5rem; border-radius: 0;">
+
+        <div id="contenedorPerfil" class="d-flex align-items-center gap-3 position-relative"
+             style="cursor: pointer; width: 250px;">
+            <img src="@Url.Action("ObtenerFotoPerfil", "Usuarios", new { usuarioNo = Model.centroControl.UsuarioNo })"
+                 class="rounded-circle"
+                 alt="Avatar"
+                 width="36"
+                 height="36"
+                 style="object-fit: cover; border: 2px solid #fff;" />
+            <div class="d-flex flex-column">
+                <span class="text-white fw-semibold">@Model.centroControl.Correo</span>
+            </div>
+        </div>
+
+    </div>
+
+ 
+    <!-- Cards de sucursales -->
+    <div class="card-body">
+        <div class="d-flex flex-wrap justify-content-center gap-4 mb-6">
+            @if (Model.Sucursales != null && Model.Sucursales.Any())
+            {
+                foreach (var sucursal in Model.Sucursales)
+                {
+                    <div style="width: 270px;">
+                        <a href="@Url.Action("SeleccionarSucursal", "Usuarios", new { sucursalNo = sucursal.SucursalNo,
+                            usuarioSucursalNo = sucursal.UsuarioSucursalNo,
+                            usuarioNo = sucursal.UsuarioNo, 
+                            empresaSucursal = sucursal.SUCURSALES_NombreSucursal,
+                            direccion = sucursal.SUCURSALES_Direccion,
+                            sede = sucursal.SUCURSALES_Sede,
+                            razonSocial  = sucursal.EMPRESA_RazonSocial,
+                            ruc  = sucursal.EMPRESA_NumRuc,
+                            telefono1  = sucursal.EMPRESA_Telefono1,
+                            telefono2  = sucursal.EMPRESA_Telefono2,
+                            correo  = sucursal.EMPRESA_Correo
+                            })" class="text-decoration-none">
+                            <div class="card shadow-none border p-2 h-100" style="cursor: pointer;">
+                                <div class="rounded-2 overflow-hidden mb-2">
+                                    <img src="@Url.Action("ObtenerFotoSucursal", "Usuarios", new { sucursalNo = sucursal.SucursalNo })"
+                                         alt="Imagen Sucursal"
+                                         class="w-100 h-auto rounded-2 object-fit-cover"
+                                         style="max-height: 110px;" />
+                                </div>
+                                <div class="card-body p-4 pt-1">
+                                    <div class="d-flex justify-content-center align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-label-warning text-uppercase fw-semibold" style="width: 200px; display: inline-block; text-align: center;">
+                                            <strong>Sede:</strong>  @sucursal.SUCURSALES_Sede
+                                        </span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center align-items-center mb-3">
+                                        <span class="badge rounded-pill bg-label-primary">@sucursal.SUCURSALES_NombreSucursal</span>
+                                    </div>
+                                    <div class="d-flex align-items-start">
+                                        <div class="rounded-pill px-3 py-2 bg-label-success text-wrap w-100 d-flex align-items-center small" style="white-space: normal;">
+                                            <i class="ri-map-pin-line ri-15px me-2"></i>
+                                            <span>@sucursal.SUCURSALES_Direccion</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center">
+                    <p class="text-muted">No hay sucursales asignadas a este usuario.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+<!-- Dropdown fuera del flujo normal -->
+<ul id="menuCerrarSesion" class="dropdown-menu"
+    style="display: none; position: absolute; z-index: 99999;">
+    <li>
+        
+        <div class="d-grid px-4 pt-2 pb-1">
+            <a class="btn btn-danger d-flex" asp-controller="Auth" asp-action="CerrarSesion">
+                <small class="align-middle">Logout</small>
+                <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+            </a>
+
+         
+        </div>
+
+    </li>
+</ul>

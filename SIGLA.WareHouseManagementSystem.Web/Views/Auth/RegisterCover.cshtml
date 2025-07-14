@@ -1,0 +1,118 @@
+@model SIGLA.Business.Dto.Usuariossss.UsuariosCreacionDto
+
+@{
+    Layout = "_BlankLayout";
+    ViewData["Title"] = "Register Cover - Pages";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/form-validation.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/&#64;form-validation/popular.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/bootstrap5.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/auto-focus.js"></script>
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+}
+@section PageScripts {
+    <script src="~/js/pages-auth.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("formAuthentication");
+            const clave = document.getElementById("Clave");
+            const confirmarClave = document.getElementById("ConfirmarClave");
+            const errorSpan = document.getElementById("errorConfirmarClave");
+
+            function validarCoincidencia() {
+                if (clave.value && confirmarClave.value && clave.value !== confirmarClave.value) {
+                    errorSpan.style.display = "block";
+                } else {
+                    errorSpan.style.display = "none";
+                }
+            }
+
+            // Escucha cuando el usuario escribe
+            clave.addEventListener("input", validarCoincidencia);
+            confirmarClave.addEventListener("input", validarCoincidencia);
+
+            // Validación final antes del envío
+            form.addEventListener("submit", function (e) {
+                if (clave.value && confirmarClave.value && clave.value !== confirmarClave.value) {
+                    e.preventDefault();
+                    errorSpan.style.display = "block";
+                    toastr.error("Las contraseñas no coinciden.", "Error");
+                }
+            });
+        });
+    </script>
+}
+
+<div class="authentication-wrapper authentication-cover">
+    <!-- Logo -->
+    <a href="/" class="auth-cover-brand d-flex align-items-center gap-3">
+        <span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span>
+        <span class="app-brand-text demo text-heading fw-semibold">@TempData.Peek("appName")</span>
+    </a>
+
+    <div class="authentication-inner row m-0">
+        <!-- Imagen -->
+        <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-12 pb-2">
+            <div>
+                <img src="~/img/illustrations/auth-cover-register-illustration-light.png" class="authentication-image-model d-none d-lg-block" alt="auth-model">
+            </div>
+            <img src="~/img/illustrations/tree-2.png" alt="tree" class="authentication-image-tree z-n1">
+            <img src="~/img/illustrations/auth-cover-mask-light.png" class="scaleX-n1-rtl authentication-image d-none d-lg-block w-75" height="362" alt="triangle-bg">
+        </div>
+
+        <!-- Formulario -->
+        <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg position-relative py-sm-5 px-12 py-4">
+            <div class="w-px-400 mx-auto pt-5 pt-lg-0">
+                <h4 class="mb-1">Bienvenido 👋</h4>
+                <p class="mb-5">Crea tu cuenta para comenzar</p>
+
+                @using (Html.BeginForm("RegisterCover", "Auth", FormMethod.Post, new { @id = "formAuthentication", @autocomplete = "off" }))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-floating form-floating-outline mb-4">
+                        @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control", @maxlength = "100", placeholder = "Nombre de usuario", id = "NombreUsuario" })
+                        <label for="NombreUsuario">Nombre Usuario</label>
+                        @Html.ValidationMessageFor(m => m.NombreUsuario, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating form-floating-outline mb-4">
+                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @maxlength = "100", placeholder = "Correo", id = "Correo" })
+                        <label for="Correo">Correo</label>
+                        @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating form-floating-outline mb-4">
+                        @Html.PasswordFor(m => m.Clave, new { @class = "form-control", @maxlength = "100", placeholder = "Contraseña", id = "Clave" })
+                        <label for="Clave">Contraseña</label>
+                        @Html.ValidationMessageFor(m => m.Clave, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating form-floating-outline mb-4">
+                        @* <input type="password" class="form-control" id="ConfirmarClave" maxlength="100" placeholder="Confirmar contraseña" /> *@
+                        @Html.PasswordFor(m => m.ConfirmarClave, new { @class = "form-control", @maxlength = "100", placeholder = "Contraseña", id = "ConfirmarClave" })
+
+                        <label for="ConfirmarClave">Confirmar Contraseña</label>
+                        <span id="errorConfirmarClave" class="text-danger" style="display:none;">Las contraseñas no coinciden.</span>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary d-grid w-100">
+                        Registrarse
+                    </button>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
