@@ -1,0 +1,627 @@
+@model SIGLA.Business.Dto.Usuariossss.UsuariosDto
+
+@{
+    ViewData["Title"] = "Extensions DataTables - Tables";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-select-bs5/select.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css" />
+    <link rel="stylesheet" href="~/vendor/libs/sweetalert2/sweetalert2.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+    <script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
+
+
+
+}
+
+@functions {
+    public string GetBadgeClassRol(string rol)
+    {
+        if (string.IsNullOrWhiteSpace(rol)) return "bg-label-secondary";
+
+        return rol.Trim().ToLower() switch
+        {
+            "administrador" => "bg-label-success",
+            "vendedor" => "bg-label-warning",
+            "principal" => "bg-label-success",
+            "sucursal" => "bg-label-warning",
+            "almacenero" => "bg-label-primary",
+            "cliente" => "bg-label-success",
+            "supervisor" => "bg-label-primary",
+            _ => "bg-label-secondary"
+        };
+    }
+}
+
+
+<style type="text/css">
+    .table-red thead th {
+        background-color: #D12222; /* Color rojo */
+        color: white; /* Color del texto */
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .badge-amarillo {
+        background-color: #FFFF00; /* Amarillo */
+        color: #000000; /* Color de texto, ajusta según sea necesario */
+    }
+
+    .badge-rojo {
+        background-color: #FF0000; /* Rojo */
+    }
+
+    .badge-naranja {
+        background-color: #ff8000;
+    }
+
+    .badge-antiquewhite {
+        background-color: antiquewhite;
+    }
+
+    .badge-negro {
+        background-color: #000000;
+    }
+
+    .badge-azul {
+        background-color: #3c44ff;
+    }
+
+    .badge-verdeesme {
+        background-color: springgreen;
+    }
+
+    .badge-amarillooscuro {
+        background-color: #f1b845;
+    }
+
+    .badge-morado {
+        background-color: #e499e4;
+    }
+
+    .badge-celestePastel {
+        background-color: #86c5f2;
+    }
+
+    .badge-RojoPastel {
+        background-color: #f27da9;
+    }
+
+    .tableHead {
+        text-align: center;
+    }
+
+    #TablaListadoProgramacionPL thead th {
+        text-align: center;
+    }
+
+    .tableHead th {
+        text-align: center;
+    }
+
+    .badge-VerdePastel {
+        background-color: #d4f5d4;
+        color: #28a745;
+    }
+
+    .badge-AmarilloPastel {
+        background-color: #fff3cd;
+        color: #f0ad4e;
+    }
+
+    .badge-LilaPastel {
+        background-color: #eee9fe;
+        color: #7a5ff4;
+    }
+</style>
+
+
+@functions {
+    string GetBadgeClass(string estadoDescripcion)
+    {
+        switch (estadoDescripcion)
+        {
+            case "Administrador":
+                return "badge-VerdePastel"; // Nueva clase para color amarillo
+            case "ALMACENERO":
+                return "badge-naranja"; // Nueva clase para color amarillo
+            case "Vendedor":
+                return "badge-AmarilloPastel";
+
+            case "Almacenero":
+                return "badge-celestePastel";
+            case "Vendedors":
+                return "badge-verdeesme";
+
+            case "PENDIENTE FIN RAMPA":
+                return "badge-amarillooscuro";
+            case "CURSO":
+                return "badge-warning";
+            case "PENDIENTE SALIDA ALMACÉN":
+                return "badge-naranja";
+            case "INICIADO":
+                return "badge-amarillo";
+            case "SALIDA ALMACEN":
+                return "badge-morado";
+            case "EJECUCIÓN RAMPA":
+                return "badge-negro";
+            case "PRIMER PESAJE":
+                return "badge-azul";
+            default:
+                return "badge-secondary"; // Puedes cambiar esto según tus necesidades
+        }
+    }
+}
+
+
+<div class="row gy-12">
+
+    <div class="col-xl-12">
+        <h6 class="text-muted">Usuarios / Listado  </h6>
+        <div class="card text-center mb-4">
+            <div class="card-header p-0">
+                <div class="nav-align-top">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex flex-column gap-1 @(ViewContext.RouteData.Values["action"]!.ToString() == "RegistrarUsuariosNuevos" ? "active border-bottom border-primary text-primary" : "")"
+                               href="@Url.Action("RegistrarUsuariosNuevos", "UsuariosCore")" role="tab">
+                                <i class="tf-icons ri-file-add-line"></i>
+                                <span>Registro</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex flex-column gap-1 @(ViewContext.RouteData.Values["action"]!.ToString() == "ListadoUsuariosSucursales" ? "active border-bottom border-primary text-primary" : "")"
+                               href="@Url.Action("ListadoUsuariosSucursales", "UsuariosCore")" role="tab">
+                                <i class="tf-icons ri-list-check"></i>
+                                <span>Listado</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content pb-0">
+                    <div class="tab-pane fade show active" id="navs-home-card" role="tabpanel">
+
+                        <h5 class="card-header ">
+                            <i class="ri-shield-user-line text-primary fs-4"></i>
+                            Listado Usuario
+                        </h5>
+
+                        <div class="card-body">
+
+
+                            @using (Html.BeginForm("ListadoUsuariosSucursales", "UsuariosCore", FormMethod.Post, new { @class = "row g-2 align-items-end mb-4" }))
+                            {
+                                <div class="form-group row g-3 align-items-center mb-3">
+                                    <div class="col-auto d-flex align-items-center">
+                                        <label for="FechaDesde" class="form-label mb-0 me-2" style="min-width: 120px;">Fecha Desde:</label>
+                                        @Html.TextBoxFor(m => m.FechaDesde, new { @class = "form-control", type = "date" })
+                                    </div>
+
+                                    <div class="col-auto d-flex align-items-center">
+                                        <label for="FechaHasta" class="form-label mb-0 me-2" style="min-width: 120px;">Fecha Hasta:</label>
+                                        @Html.TextBoxFor(m => m.FechaHasta, new { @class = "form-control", type = "date" })
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="ri-search-eye-line"></i> Buscar
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <hr class="my-12">
+
+                                <div class="card">
+
+                                    <div class=" card-datatable table-responsive" style="overflow-x: auto;">
+                                        <table id="Table_UsuariosSucursal" class="table table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ver Detalle</th> <!-- Nueva columna -->
+
+                                                    <th>Usuario  </th>
+                                                    @*           <th>Nombre Completo</th>
+                                                <th>Apellido Paterno</th>
+                                                <th>Apellido Materno</th> *@
+                                                    <th>Número Documento</th>
+                                                    <th>Rol</th>
+                                                    <th>Correo</th>
+                                                    <th>Género</th>
+
+
+                                                    <th>Usuario Creación</th>
+                                                    <th>Fecha Hora Creación</th>
+                                                    <th>Ver Foto</th>
+                                                    <th>Editar  </th>
+                                                    <th>Elminar    </th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                                @if (Model.lstCentroControl != null && Model.lstCentroControl.Any())
+                                                {
+                                                    foreach (var item in Model.lstCentroControl)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <button type="button"
+                                                                        class="btn btn-icon btn-info rounded-pill detalle-usuario-link"
+                                                                        data-id="@item.UsuarioNo">
+                                                                    <span class="tf-icons ri-eye-line ri-22px"></span>
+                                                                </button>
+                                                            </td>
+
+                                                            @*     <td class="text-center">
+                                                                <img src="@Url.Action("ObtenerFotoPerfil", "Usuarios", new { usuarioNo = item.UsuarioNo })"
+                                                                     alt="Foto perfil"
+                                                                     class="rounded-circle"
+                                                                     style="width: 40px; height: 40px; object-fit: cover;" />
+                                                            </td> *@
+
+
+                                                            <td class="text-start">
+                                                                <div class="d-flex align-items-center">
+                                                                    <img src="@Url.Action("ObtenerFotoPerfil", "UsuariosCore", new { usuarioNo = item.UsuarioNo })"
+                                                                         alt="Foto perfil"
+                                                                         class="rounded-circle me-3"
+                                                                         style="width: 40px; height: 40px; object-fit: cover;" />
+                                                                    <div class="d-flex flex-column">
+                                                                        <strong class="fw-semibold">@item.USUARIOS_NombreUsuario </strong>
+                                                                        <small class="text-muted">@item.USUARIOS_ApellidoPaterno @item.USUARIOS_ApellidoMaterno</small>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+                                                            @*    <td>@item.USUARIOS_NombreUsuario</td>
+                                                        <td>@item.USUARIOS_ApellidoPaterno</td>
+                                                        <td>@item.USUARIOS_ApellidoMaterno</td> *@
+                                                            <td>@item.USUARIOS_NumeroDocumento</td>
+                                                            @*   <td>@item.USUARIOS_Rol</td> *@
+
+                                                            @*   <td>
+                                                                <span class="badge fixed-badge @(GetBadgeClass(item.USUARIOS_Rol))"
+                                                                      style="text-transform: uppercase; font-weight: bold; font-size: 1em; display: inline-block; width: 200px;   border-radius: 25px; text-align: center;">
+                                                                    @(item.USUARIOS_Rol)
+                                                                </span>
+
+                                                            </td> *@
+
+                                                            <td class="text-center">
+                                                                <span class="badge rounded-pill fw-semibold text-uppercase @GetBadgeClassRol(item.USUARIOS_Rol)"
+                                                                      style="width: 200px; display: inline-block; text-align: center;">
+                                                                    @item.USUARIOS_Rol
+                                                                </span>
+
+                                                            </td>
+
+
+
+                                                            <td>@item.USUARIOS_Correo</td>
+                                                            <td>@item.USUARIOS_Sexo</td>
+
+                                                            <td>@item.UsuarioCreacion</td>
+                                                            <td>@item.FechaHoraCreacion</td>
+                                                            <td class="text-center">
+                                                                <a href="@Url.Action("GaleriaFotos", "UsuariosCore", new { id = item.UsuarioNo })"
+                                                                   class="btn btn-icon btn-warning rounded-pill detalle-usuario-ver-foto"
+                                                                   title="Ver galería de fotos">
+                                                                    <i class="ri-camera-line ri-20px"></i>
+                                                                </a>
+                                                            </td>
+
+
+
+
+
+                                                            <td class="text-center">
+                                                                <button type="button"
+                                                                        class="btn btn-icon btn-primary rounded-pill btn-editar"
+                                                                        data-usuario="@item.UsuarioNo">
+                                                                    <span class="tf-icons ri-pencil-line ri-22px"></span>
+                                                                </button>
+                                                            </td>
+
+
+                                                            <td class="text-center">
+                                                                <button type="button"
+                                                                        class="btn btn-icon btn-danger rounded-pill btn-eliminar-usuario"
+                                                                        data-id="@item.UsuarioNo"
+                                                                        data-nombre="@item.USUARIOS_NombreUsuario"
+                                                                        data-apellido="@item.USUARIOS_ApellidoPaterno @item.USUARIOS_ApellidoMaterno"
+                                                                        data-correo="@item.USUARIOS_Correo">
+                                                                    <span class="tf-icons ri-delete-bin-6-line ri-22px"></span>
+                                                                </button>
+                                                            </td>
+
+
+
+                                                        </tr>
+
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <hr class="my-12">
+
+
+                                <h5 class="card-header ">
+                                    <i class="ri-shield-user-line text-primary fs-4"></i>
+                                    Empresa Asociada al Usuario
+                                </h5>
+
+                                <div class="card">
+
+                                    <div class="card-datatable table-responsive" style="overflow-x: auto;">
+                                        <table id="Table_UsuariosSucursalFullDetalle" class="table table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Empresa</th>
+                                                    <th>Sede</th>
+
+                                                    <th>Dirección Empresa</th>
+                                                    <th>Teléfono Empresa</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+
+
+
+                            }
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+@section PageScripts {
+    <script>
+        // Tabla principal en su propio $(document).ready
+        $(document).ready(function () {
+            $('#Table_UsuariosSucursal').DataTable({
+                scrollY: '800px',
+                scrollX: true,
+                scrollCollapse: true,
+                paging: true,
+                autoWidth: false,
+                responsive: false,
+                order: [],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                },
+                dom: '<"row mb-2"<"col-md-6 text-start"l><"col-md-6 text-end"f>>' +
+                    't' +
+                    '<"row mt-2"<"col-md-6 text-start"i><"col-md-6 text-end"p>>'
+            });
+        });
+
+        // Tabla de detalle y carga de datos desde AJAX
+        $(document).ready(function () {
+            let tablaDetalleUsuarios = $('#Table_UsuariosSucursalFullDetalle').DataTable({
+                ordering: false,
+                pageLength: 10,
+                destroy: true,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                },
+                  dom: '<"row mb-2"<"col-md-6 text-start"l><"col-md-6 text-end"f>>' +
+                    't' +
+                    '<"row mt-2"<"col-md-6 text-start"i><"col-md-6 text-end"p>>',
+                  columns: [
+            { data: "UsuarioSucursalNo" },
+            { data: "SUCURSALES_NombreSucursal" },
+            {
+                data: "SUCURSALES_Sede",
+                render: function (data, type, row) {
+                    let clase = "bg-label-secondary";
+                    let texto = data ? data.toString().trim().toLowerCase() : "";
+
+                    if (texto === "principal") clase = "bg-label-success";
+                    else if (texto === "sucursal") clase = "bg-label-warning";
+
+                    return `<span class="badge rounded-pill fw-semibold text-uppercase ${clase}" style="width: 200px; display: inline-block; text-align: center;">
+                                ${data}
+                            </span>`;
+                }
+            },
+            { data: "SUCURSALES_Direccion" },
+            { data: "SUCURSALES_Telefono" }
+        ]
+
+
+            });
+
+            // Evento click para cargar detalle
+            $(document).on('click', '.detalle-usuario-link', function () {
+                const id = $(this).data('id');
+
+                $.ajax({
+                    url: '@Url.Action("GetDetalle", "UsuariosCore")',
+                    type: 'GET',
+                    data: { id: id },
+                    success: function (response) {
+                        console.log(response.data); // inspeccionar valores
+
+                        if (response.success) {
+                            tablaDetalleUsuarios.clear().draw();
+
+                            $.each(response.data, function (i, item) {
+                                tablaDetalleUsuarios.row.add({
+                              UsuarioSucursalNo: item.UsuarioSucursalNo,
+                              SUCURSALES_NombreSucursal: item.SUCURSALES_NombreSucursal,
+                              SUCURSALES_Sede: item.SUCURSALES_Sede,
+                              SUCURSALES_Direccion: item.SUCURSALES_Direccion,
+                              SUCURSALES_Telefono: item.SUCURSALES_Telefono
+                               });
+
+                            });
+
+                            tablaDetalleUsuarios.draw();
+
+                            $('html, body').animate({
+                                scrollTop: $("#Table_UsuariosSucursalFullDetalle").offset().top - 100
+                            }, 500);
+                        } else {
+                            tablaDetalleUsuarios.clear().draw();
+                            toastr.warning("No se encontró detalle para este registro.");
+                        }
+                    },
+                    error: function () {
+                        toastr.error("Error al obtener el detalle.");
+                    }
+                });
+            });
+        });
+
+
+
+
+
+           document.querySelectorAll('.btn-editar').forEach(function (element) {
+            element.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                var usuarioNo = this.getAttribute("data-usuario");
+
+                // Redirigir al método EditarusuarioSucursal con el valor de UsuarioNo
+                window.location.href = '@Url.Action("EditarusuarioSucursal", "UsuariosCore")' + '?UsuarioNo=' + usuarioNo;
+            });
+        });
+
+
+
+
+
+
+              $(document).on('click', '.btn-eliminar-usuario', function () {
+            var usuarioNo = $(this).data('id');
+            var nombre = $(this).data('nombre');
+            var apellido = $(this).data('apellido');
+            var correo = $(this).data('correo');
+
+            Swal.fire({
+                title: '¿Estás seguro Eliminar?',
+                       html: `
+            <div style="text-align:center;">
+                <strong>Nombre completo:</strong> ${nombre} ${apellido}<br>
+                <strong>Correo:</strong> ${correo}<br><br>
+                <strong> Será eliminado junto con sus sucursales asociadas.</strong>
+            </div>
+        `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    confirmButton: 'btn btn-danger me-2',
+                    cancelButton: 'btn btn-outline-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarUsuario", "UsuariosCore")',
+                        type: 'POST',
+                        data: { usuarioNo: usuarioNo },
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Eliminado!',
+                                    text: 'El usuario fue eliminado correctamente.',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    buttonsStyling: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire('Error', data.error || 'No se pudo eliminar.', 'error');
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Error', 'Ocurrió un error en el servidor.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

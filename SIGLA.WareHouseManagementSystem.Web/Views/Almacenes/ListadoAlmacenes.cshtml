@@ -164,7 +164,7 @@
 <div class="row gy-12">
 
     <div class="col-xl-12">
-        <h6 class="text-muted">Almacenes  </h6>
+        <h6 class="text-muted">Almacén / Listado  </h6>
         <div class="card text-center mb-4">
             <div class="card-header p-0">
                 <div class="nav-align-top">
@@ -252,21 +252,21 @@
                                                     foreach (var item in Model.lstCentroControl)
                                                     {
                                                         <tr>
-                                                            <td>@item.NombreAlmacen</td>
+                                                      @*       <td>@item.NombreAlmacen</td> *@
                                                           
 
-                                                    @*         <td class="text-start">
+                                                            <td class="text-start">
                                                                 <div class="d-flex align-items-center">
-                                                                    <img src="@Url.Action("ObtenerFotoPerfilSucursal", "Almacenes", new { EmpresaNo = item.AlmacenNo })"
+                                                                    <img src="@Url.Action("ObtenerFotoPerfilAlmacen", "Almacenes", new { EmpresaNo = item.AlmacenNo })"
                                                                          alt="Foto perfil"
                                                                          class="rounded-circle me-3"
                                                                          style="width: 40px; height: 40px; object-fit: cover;" />
                                                                     <div class="d-flex flex-column">
                                                                         <strong class="fw-semibold">@item.NombreAlmacen </strong>
-                                                                        <small class="text-muted">@item.Direccion </small>
+                                                                        
                                                                     </div>
                                                                 </div>
-                                                            </td> *@
+                                                            </td>
 
 
 
@@ -278,7 +278,7 @@
 
 
                                                             <td class="text-center">
-                                                                <a href="@Url.Action("GaleriaFotos", "Almaceneaas", new { id = item.AlmacenNo })"
+                                                                <a href="@Url.Action("GaleriaFotos", "Almacenes", new { id = item.AlmacenNo })"
                                                                    class="btn btn-icon btn-warning rounded-pill detalle-usuario-ver-foto"
                                                                    title="Ver galería de fotos">
                                                                     <i class="ri-camera-line ri-20px"></i>

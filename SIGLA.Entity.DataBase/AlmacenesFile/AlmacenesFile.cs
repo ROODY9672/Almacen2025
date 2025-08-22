@@ -17,7 +17,7 @@ namespace SIGLA.Entity.DataBase.AlmacenesFile
         public bool Anulado { get; set; }
         public DateTime? FechaHoraAnulado { get; set; }
         public string UsuarioAnulado { get; set; }
-        public DateTime FechaHoraCreacion { get; set; }
+        public DateTime? FechaHoraCreacion { get; set; }
         public string UsuarioCreacion { get; set; }
         public DateTime? FechaHoraModificacion { get; set; }
         public string UsuarioModificacion { get; set; }

@@ -12,6 +12,7 @@ namespace SIGLA.Business.Services.Wrapper.IService
     public interface IAlmacenesFileService
     {
         Task<ResourceResponseDto<int>> RegisterAsync(AlmacenesFileCreacionDto dto);
+        Task<ResourceResponseDto<IEnumerable<AlmacenesFileColeccionDto>>> ListadoFotosFiltradoTodos(int id);
 
     }
 }

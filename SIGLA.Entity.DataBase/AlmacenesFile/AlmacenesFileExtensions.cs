@@ -42,5 +42,35 @@ namespace SIGLA.Entity.DataBase.AlmacenesFile
             private set { }
         }
 
+
+
+
+
+        public static string ToSelectedTipoFotoTodos
+        {
+            get
+            {
+                return @"
+                    SELECT * FROM ALMACENES_FILE F
+                        WHERE F.AlmacenNo = @AlmacenNo
+                         AND F.Anulado = 0;";
+                // TipoFotoNo=@TipoFotoNo
+
+
+
+
+            }
+            private set { }
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
