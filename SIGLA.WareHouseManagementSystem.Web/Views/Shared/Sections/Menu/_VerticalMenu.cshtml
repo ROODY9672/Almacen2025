@@ -123,7 +123,7 @@
 
         <!-- Organización -->
         <li class='menu-item@(
-    currentPage.StartsWith("/Usuarios") ||
+    currentPage.StartsWith("/UsuariosCore") ||
     currentPage.StartsWith("/Sucursales") ? " active open" : "")'>
 
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -133,11 +133,11 @@
 
             <ul class="menu-sub">
                 <li class='menu-item@(
-            currentPage == "/Usuarios/RegistrarUsuariosNuevos" ||
-            currentPage == "/Usuarios/ListadoUsuariosSucursales"
+            currentPage == "/UsuariosCore/RegistrarUsuariosNuevos" ||
+            currentPage == "/UsuariosCore/ListadoUsuariosSucursales"
             ? " active" : "")'>
-                    <a asp-controller="Usuarios" asp-action="RegistrarUsuariosNuevos" class="menu-link">
-                        <div data-i18n="Registrar Usuario">Registrar Usuario</div>
+                    <a asp-controller="UsuariosCore" asp-action="RegistrarUsuariosNuevos" class="menu-link">
+                        <div data-i18n="Usuario">  Usuario</div>
                     </a>
                 </li>
                 <li class='menu-item@(
@@ -145,7 +145,7 @@
             currentPage == "/Sucursales/ListadoEmpresaSucursales"
             ? " active" : "")'>
                     <a asp-controller="Sucursales" asp-action="RegistrarSucursal" class="menu-link">
-                        <div data-i18n="Registrar Sucursal">Registrar Sucursal</div>
+                        <div data-i18n="Sucursal">  Sucursal</div>
                     </a>
                 </li>
             </ul>

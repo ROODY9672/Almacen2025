@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace SIGLA.WareHouseManagementSystem.Web.Controllers
 {
+  [LoginRequired]
   public class AlmacenesController : Controller
   {
     private readonly IAlmacenesService _almacenesService;
@@ -238,6 +239,39 @@ namespace SIGLA.WareHouseManagementSystem.Web.Controllers
       };
       return View(model2);
     }
+
+
+
+
+    public async Task<ActionResult> GaleriaFotos(int id)
+    {
+      var data = await _almacenesFileService.ListadoFotosFiltradoTodos(id);
+      return View(data.Data);
+    }
+
+
+
+
+    [HttpGet]
+    public async Task<FileResult> ObtenerFotoPerfilAlmacen(int usuarioNo)
+    {
+      //var resultado = await _usuariosFileService.ObtenerFotoPerfilAsync(usuarioNo);
+
+      //if (resultado?.Data == null)
+      //{
+      // Imagen por defecto si no tiene foto
+      string rutaDefault = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "avatars", "manzana.png");
+      byte[] bytes = await System.IO.File.ReadAllBytesAsync(rutaDefault);
+      return File(bytes, "image/png");
+      //}
+
+      //return File(resultado.Data.Data, resultado.Data.ContentType ?? "image/png");
+    }
+
+
+
+
+
 
 
 

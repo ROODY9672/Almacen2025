@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIGLA.Entity.DataBase.AlmacenesFile
+namespace SIGLA.Business.Dto.AlmacenesFilesss
 {
-    public partial  class AlmacenesFile
+    public class AlmacenesFileColeccionDto
     {
         public int AlmacenesFileNo { get; set; }
         public string FlagTipoFoto { get; set; }
@@ -17,7 +17,7 @@ namespace SIGLA.Entity.DataBase.AlmacenesFile
         public bool Anulado { get; set; }
         public DateTime? FechaHoraAnulado { get; set; }
         public string UsuarioAnulado { get; set; }
-        public DateTime? FechaHoraCreacion { get; set; }
+        public string FechaHoraCreacion { get; set; }
         public string UsuarioCreacion { get; set; }
         public DateTime? FechaHoraModificacion { get; set; }
         public string UsuarioModificacion { get; set; }

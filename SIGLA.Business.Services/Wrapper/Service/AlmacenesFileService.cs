@@ -1,9 +1,9 @@
 ﻿using Dapper;
-using SIGLA.Business.Dto.SucursalesFilesss;
+ 
 using SIGLA.Business.Dto;
 using SIGLA.Business.Services.Infraestructure;
 using SIGLA.Business.Services.Wrapper.IService;
-using SIGLA.Entity.DataBase.SucursalesFile;
+ 
 using SIGLA.Interface.Repository;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SIGLA.Business.Dto.AlmacenesFilesss;
 using SIGLA.Entity.DataBase.AlmacenesFile;
+
 
 namespace SIGLA.Business.Services.Wrapper.Service
 {
@@ -79,6 +80,62 @@ namespace SIGLA.Business.Services.Wrapper.Service
             return result;
         }
 
-       
+
+
+
+
+
+        public async Task<ResourceResponseDto<IEnumerable<AlmacenesFileColeccionDto>>> ListadoFotosFiltradoTodos(int id)
+        {
+            var param = new DynamicParameters();
+            var result = new ResourceResponseDto<IEnumerable<AlmacenesFileColeccionDto>>();
+
+            try
+            {
+                param.Add("@AlmacenNo", id);
+                //param.Add("@TipoFotoNo", TipoFotoNo);
+                var query = await this._unit.AlmacenesFileRepository.PostRecordsAsync<AlmacenesFile>(
+                    command: AlmacenesFile.ToSelectedTipoFotoTodos,
+                    param: param,
+                    commandType: CommandType.Text);
+
+                if (query != null)
+                {
+                    if (query.Count() > 0)
+                    {
+                        result.Success = true;
+                        result.Data = this._mapping.AlmacenesFileMapping.ToEnumerable(query);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ErrorMessage = ex.Message;
+            }
+            finally
+            {
+                param = null;
+            }
+
+            return result;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
