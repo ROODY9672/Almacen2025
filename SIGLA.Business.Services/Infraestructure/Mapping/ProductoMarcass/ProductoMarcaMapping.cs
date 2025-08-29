@@ -57,6 +57,28 @@ namespace SIGLA.Business.Services.Infraestructure.Mapping.ProductoMarcass
 
 
 
+        public IEnumerable<ProductoMarcaColeccionDto> ToEnumerable(IEnumerable<ProductoMarca> entidad)
+        {
+            return entidad.Select(dto => new ProductoMarcaColeccionDto()
+            {
+                ProductoMarcaNo = dto.ProductoMarcaNo,
+                Descripcion = dto.Descripcion,
+
+                UsuarioCreacion = string.IsNullOrEmpty(dto.UsuarioCreacion) ? "SYSADMIN" : dto.UsuarioCreacion,
+                UsuarioBaja = dto.UsuarioBaja,
+                FechaHoraBaja = dto.FechaHoraBaja,
+                Anulado = dto.Anulado,
+                FechaHoraCreacion = dto.FechaHoraCreacion.HasValue
+                    ? dto.FechaHoraCreacion.Value.ToString("dd/MM/yyyy HH:mm")
+                    : string.Empty,
+
+                MarcaSucursalId = dto.MarcaSucursalId,
+                SucursalNo = dto.SucursalNo,
+
+
+            });
+        }
+
 
 
 

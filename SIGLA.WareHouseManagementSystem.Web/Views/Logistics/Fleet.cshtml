@@ -1,4 +1,15 @@
+@* @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment _env
+ *@
+
+@using Microsoft.Extensions.Hosting
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment _env
+
+@if (_env.IsEnvironment("Development"))
+{
+    <div class="alert alert-outline-primary alert-dismissible" role="alert">
+        ...
+    </div>
+}
 
 @{
   ViewData["Title"] = "Logistics - Fleet";

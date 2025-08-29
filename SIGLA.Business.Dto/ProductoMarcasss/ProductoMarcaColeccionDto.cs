@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SIGLA.Entity.DataBase.ProductoMarca
+namespace SIGLA.Business.Dto.ProductoMarcasss
 {
-    public partial class ProductoMarca
+    public class ProductoMarcaColeccionDto
     {
         public int ProductoMarcaNo { get; set; }
         public string Descripcion { get; set; }
         public string UsuarioCreacion { get; set; }
-        public DateTime? FechaHoraCreacion { get; set; }
+        public string  FechaHoraCreacion { get; set; }
         public string UsuarioModificacion { get; set; }
         public DateTime? FechaHoraModificacion { get; set; }
         public string UsuarioBaja { get; set; }
@@ -19,5 +19,6 @@ namespace SIGLA.Entity.DataBase.ProductoMarca
         public bool Anulado { get; set; }
         public int MarcaSucursalId { get; set; }
         public int SucursalNo { get; set; }
+
     }
 }

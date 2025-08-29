@@ -46,5 +46,23 @@ namespace SIGLA.Entity.DataBase.ProductoMarca
             private set { }
         }
 
+
+        public static string Tosp_spProductoMarcaList
+        {
+            get
+            {
+                return @"[spProductoMarcaList]";
+                //return @"spProgramacionList4";
+            }
+            private set { }
+        }
+
+
+
+
+
+
+
+
     }
 }

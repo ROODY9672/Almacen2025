@@ -13,6 +13,7 @@ namespace SIGLA.Business.Services.Wrapper.IService
     {
         Task<ResourceResponseDto<int>> RegisterAsync(ProductoMarcaCreacionDto dto);
         Task<ResourceResponseDto<ProductoMarcaObjetoDto>> BuscarPorNombreAsync(string Descripcion);
+        Task<ResourceResponseDto<IEnumerable<ProductoMarcaColeccionDto>>> ListadoProductoMarca(string fechaDesde, string fechaHasta, int sucursalNo);
 
     }
 }

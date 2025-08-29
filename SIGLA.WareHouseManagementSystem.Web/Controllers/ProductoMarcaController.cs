@@ -266,6 +266,78 @@ namespace SIGLA.WareHouseManagementSystem.Web.Controllers
 
 
 
+    public async Task<ActionResult> ListadoProductoMarca()
+    {
+
+      //var sucursalNo = HttpContext.Session.GetInt32("SucursalSeleccionada");
+      var sucursalNo = HttpContext.Session.GetInt32("SucursalSeleccionada") ?? 0;
+
+
+      var model = new ProductoMarcaDto();
+
+      // Obtener la fecha actual
+      DateTime fechaActual = DateTime.Now;
+      DateTime fechaDesde = fechaActual.AddMonths(-1);
+      string fechaDesdeString = fechaDesde.ToString("yyyy-MM-dd");
+      string fechaHastaString = fechaActual.ToString("yyyy-MM-dd");
+
+      var data = await _productoMarcaService.ListadoProductoMarca(fechaDesdeString, fechaHastaString, sucursalNo);
+      //var data = await _usuariosService.ListadoUsuariosConSucursale(fechaDesdeString, fechaHastaString);
+
+
+      if (data.Data == null)
+      {
+        data.Data = new List<ProductoMarcaColeccionDto>();
+      }
+      var datos = data.Data.ToList();
+
+      //for (int i = 0; i < datos.Count; i++)
+      //{
+      //    datos[i].Numero = i + 1;
+      //}
+
+      model = new ProductoMarcaDto
+      {
+        lstCentroControl = datos,
+        FechaDesde = fechaDesdeString,
+        FechaHasta = fechaHastaString,
+
+      };
+
+      return View(model);
+    }
+
+
+
+    [HttpPost]
+    public async Task<ActionResult> ListadoProductoMarca(ProductoMarcaDto model)
+    {
+      //var sucursalNo = HttpContext.Session.GetInt32("SucursalSeleccionada");
+      var sucursalNo = HttpContext.Session.GetInt32("SucursalSeleccionada") ?? 0;
+
+
+      var fechaDesde = (string.IsNullOrEmpty(model.FechaDesde)) ? null : Convert.ToDateTime(model.FechaDesde).ToString("yyyy-MM-dd");
+      var fechaHasta = (string.IsNullOrEmpty(model.FechaHasta)) ? null : Convert.ToDateTime(model.FechaHasta).ToString("yyyy-MM-dd");
+
+      var data = await _productoMarcaService.ListadoProductoMarca(fechaDesde, fechaHasta, sucursalNo);
+
+      if (data.Data == null)
+      {
+        data.Data = new List<ProductoMarcaColeccionDto>();
+      }
+      var datos = data.Data.ToList();
+
+
+      var model2 = new ProductoMarcaDto
+      {
+        //lstCentroControl = data.Data.ToList(),
+        lstCentroControl = datos,
+        FechaDesde = fechaDesde,
+        FechaHasta = fechaHasta
+      };
+      return View(model2);
+    }
+
 
 
 

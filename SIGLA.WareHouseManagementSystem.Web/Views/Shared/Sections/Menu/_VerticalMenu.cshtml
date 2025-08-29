@@ -169,7 +169,10 @@
                         <div data-i18n="Producto">Producto</div>
                     </a>
                 </li>
-                <li class='menu-item@(currentPage == "/ProductoMarca/RegistrarMarca" ? " active" : "")'>
+                <li class='menu-item@( 
+                    currentPage == "/ProductoMarca/RegistrarMarca" ||
+                    currentPage == "/ProductoMarca/ListadoProductoMarca"
+                    ? " active" : "")'>
                     <a asp-controller="ProductoMarca" asp-action="RegistrarMarca" class="menu-link">
                         <div data-i18n="Marca">Marca</div>
                     </a>

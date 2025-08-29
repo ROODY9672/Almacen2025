@@ -16,6 +16,7 @@ namespace SIGLA.Business.Services.Infraestructure.Mapping.ProductoMarcass
     {
         ProductoMarca ToEntity(ProductoMarcaCreacionDto dto);
         ProductoMarcaObjetoDto toDto(ProductoMarca dto);
+        IEnumerable<ProductoMarcaColeccionDto> ToEnumerable(IEnumerable<ProductoMarca> entidad);
 
     }
 }

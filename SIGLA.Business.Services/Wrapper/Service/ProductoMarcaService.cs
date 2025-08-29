@@ -15,6 +15,8 @@ using SIGLA.Business.Dto.ProductoMarcasss;
 using SIGLA.Entity.DataBase.ProductoMarca;
 using SIGLA.Business.Dto.Sucursalessss;
 using SIGLA.Entity.DataBase.Sucursales;
+using SIGLA.Business.Dto.Almacenessss;
+using SIGLA.Entity.DataBase.Almacenes;
 
 namespace SIGLA.Business.Services.Wrapper.Service
 {
@@ -116,6 +118,44 @@ namespace SIGLA.Business.Services.Wrapper.Service
 
 
 
+        public async Task<ResourceResponseDto<IEnumerable<ProductoMarcaColeccionDto>>> ListadoProductoMarca(string fechaDesde, string fechaHasta, int sucursalNo)
+        {
+            var param = new DynamicParameters();
+            var result = new ResourceResponseDto<IEnumerable<ProductoMarcaColeccionDto>>();
+
+            try
+            {
+                //var fechapreuba = "sasa";
+                param.Add("@FechaDesde", fechaDesde);
+                param.Add("@FechaHasta", fechaHasta);
+                param.Add("@SucursalNo", sucursalNo);
+
+                var query = await this._unit.ProductoMarcaRepository.PostRecordsAsync<ProductoMarca>(
+                    command: ProductoMarca.Tosp_spProductoMarcaList,
+                    param: param,
+                    commandType: CommandType.StoredProcedure);
+
+                if (query != null)
+                {
+                    if (query.Count() > 0)
+                    {
+                        result.Success = true;
+                        result.Data = this._mapping.ProductoMarcaMapping.ToEnumerable(query);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ErrorMessage = ex.Message;
+            }
+            finally
+            {
+                param = null;
+            }
+
+            return result;
+        }
 
 
 
